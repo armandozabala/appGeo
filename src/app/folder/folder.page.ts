@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { LocationService } from '../services/location.service';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+
 
 @Component({
   selector: 'app-folder',
@@ -9,10 +12,25 @@ import { ActivatedRoute } from '@angular/router';
 export class FolderPage implements OnInit {
   public folder: string;
 
-  constructor(private activatedRoute: ActivatedRoute) { }
 
+   constructor(private activatedRoute: ActivatedRoute,  public location: LocationService) {
+
+   }
+   
+
+ionViewDidLeave(){
+  this.location.stopTracking();
+}
   ngOnInit() {
-    this.folder = this.activatedRoute.snapshot.paramMap.get('id');
+  }
+
+
+  start(){
+    this.location.startTracking();
+  }
+
+  stop(){
+    this.location.stopTracking();
   }
 
 }
